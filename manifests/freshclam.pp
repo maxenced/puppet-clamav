@@ -11,7 +11,7 @@
 #
 #  [*update_logfile*]
 #   Path to the log file (make sure it has proper permissions)
-#    Defaults: '/home/log/clamav/freshclam.log'
+#    Defaults: '/var/log/clamav/freshclam.log'
 #
 #  [*logfile_max_size*]
 #   Maximum size of the log file.
@@ -175,7 +175,7 @@ class clamav::freshclam (
   $hour                = fqdn_rand(23),
   $command             = '/usr/bin/freshclam',
   $db_dir              = '/var/lib/clamav',
-  $update_logfile      = '/home/log/clamav/freshclam.log',
+  $update_logfile      = '/var/log/clamav/freshclam.log',
   $logfile_max_size    = '2M',
   $log_timestamp       = 'yes',
   $verbose             = 'yes',
