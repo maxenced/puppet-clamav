@@ -64,25 +64,25 @@
 #
 define clamav::scan (
   $action_error = '',
-  $action_ok = '',
+  $action_ok    = '',
   $action_virus = '',
-  $enable = true,
-  $hour = fqdn_rand(23,$title),
-  $minute = fqdn_rand(59,$title),
-  $month = 'UNSET',
-  $monthday = 'UNSET',
-  $copy = false,
-  $exclude = [ ],
-  $exclude_dir = [ ],
-  $flags = '',
-  $include = [ ],
-  $include_dir = [ ],
-  $move = '',
-  $quiet = true,
-  $recursive = false,
-  $scan = [ ],
-  $scanlog = "/var/log/clamav/scan_${title}",
-  $weekday = 'UNSET',
+  $enable       = true,
+  $hour         = fqdn_rand(23,$title),
+  $minute       = fqdn_rand(59,$title),
+  $month        = undef,
+  $monthday     = undef,
+  $copy         = false,
+  $exclude      = [ ],
+  $exclude_dir  = [ ],
+  $flags        = '',
+  $include      = [ ],
+  $include_dir  = [ ],
+  $move         = '',
+  $quiet        = true,
+  $recursive    = false,
+  $scan         = [ ],
+  $scanlog      = "/var/log/clamav/scan_${title}",
+  $weekday      = undef,
 ) {
   if $move != '' { validate_absolute_path($move) }
 
@@ -102,26 +102,14 @@ define clamav::scan (
     true    => 'present',
     default => 'absent',
   }
-  $month_r = $month ? {
-    'UNSET' => undef,
-    default => $month,
-  }
-  $monthday_r = $monthday ? {
-    'UNSET' => undef,
-    default => $monthday,
-  }
-  $weekday_r = $weekday ? {
-    'UNSET' => undef,
-    default => $weekday,
-  }
   cron { "clamav-scan-${title}":
     ensure   => $cron_ensure,
     command  => $scancmd,
     hour     => $hour,
     minute   => $minute,
-    month    => $month_r,
-    monthday => $monthday_r,
-    weekday  => $weekday_r,
+    month    => $month,
+    monthday => $monthday,
+    weekday  => $weekday,
     require  => File[$scancmd],
   }
 }
