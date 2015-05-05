@@ -3,11 +3,11 @@
 # Path to the database directory.
 # WARNING: It must match clamd.conf's directive!
 # Default: hardcoded (depends on installation options)
-DatabaseDirectory /var/lib/clamav
+DatabaseDirectory <%= @db_dir %>
 
 # Path to the log file (make sure it has proper permissions)
 # Default: disabled
-UpdateLogFile /var/log/clamav/freshclam.log
+UpdateLogFile <%= @update_logfile>
 
 # Maximum size of the log file.
 # Value of 0 disables the limit.
@@ -16,37 +16,37 @@ UpdateLogFile /var/log/clamav/freshclam.log
 # in bytes just don't use modifiers. If LogFileMaxSize is enabled,
 # log rotation (the LogRotate option) will always be enabled.
 # Default: 1M
-#LogFileMaxSize 2M
+LogFileMaxSize <%= @logfile_max_size %>
 
 # Log time with each message.
 # Default: no
-#LogTime yes
+LogTime <%= @log_timestamp %>
 
 # Enable verbose logging.
 # Default: no
-#LogVerbose yes
+LogVerbose <%= @verbose %>
 
 # Use system logger (can work together with UpdateLogFile).
 # Default: no
-LogSyslog yes
+LogSyslog <%= @log_syslog %>
 
 # Specify the type of syslog messages - please refer to 'man syslog'
 # for facility names.
 # Default: LOG_LOCAL6
-#LogFacility LOG_MAIL
+LogFacility <%= @log_facility %>
 
 # Enable log rotation. Always enabled when LogFileMaxSize is enabled.
 # Default: no
-#LogRotate yes
+LogRotate <%= @log_rotate %>
 
 # This option allows you to save the process identifier of the daemon
 # Default: disabled
-#PidFile /var/run/freshclam.pid
+PidFile <%= @pidfile %>
 
 # By default when started freshclam drops privileges and switches to the
 # "clamav" user. This directive allows you to change the database owner.
 # Default: clamav (may depend on installation options)
-DatabaseOwner <%= scope.lookupvar('clamav::params::user') %>
+DatabaseOwner <%= @db_user %>
 
 # Initialize supplementary group access (freshclam must be started by root).
 # Default: no
@@ -58,39 +58,41 @@ DatabaseOwner <%= scope.lookupvar('clamav::params::user') %>
 # WARNING: Do not touch it unless you're configuring freshclam to use your
 # own database verification domain.
 # Default: current.cvd.clamav.net
-#DNSDatabaseInfo current.cvd.clamav.net
+DNSDatabaseInfo <%= @dns_db_info %>
 
 # Uncomment the following line and replace XY with your country
 # code. See http://www.iana.org/cctld/cctld-whois.htm for the full list.
 # You can use db.XY.ipv6.clamav.net for IPv6 connections.
-#DatabaseMirror db.XY.clamav.net
+DatabaseMirror <%= @db_mirror %>
 
-# database.clamav.net is a round-robin record which points to our most 
-# reliable mirrors. It's used as a fall back in case db.XY.clamav.net is 
+# database.clamav.net is a round-robin record which points to our most
+# reliable mirrors. It's used as a fall back in case db.XY.clamav.net is
 # not working. DO NOT TOUCH the following line unless you know what you
 # are doing.
-DatabaseMirror db.us.clamav.net
-DatabaseMirror db.local.clamav.net
+#DatabaseMirror db.us.clamav.net
+DatabaseMirror database.clamav.net
 
 # How many attempts to make before giving up.
 # Default: 3 (per mirror)
-#MaxAttempts 5
+MaxAttempts <%= @max_update_attempts %>
 
 # With this option you can control scripted updates. It's highly recommended
 # to keep it enabled.
 # Default: yes
-#ScriptedUpdates yes
+ScriptedUpdates <%= @scripted_updates %>
 
 # By default freshclam will keep the local databases (.cld) uncompressed to
 # make their handling faster. With this option you can enable the compression;
 # the change will take effect with the next database update.
 # Default: no
-#CompressLocalDatabase no
+CompressLocalDatabase <%= @compress_local_db %>
 
 # With this option you can provide custom sources (http:// or file://) for
 # database files. This option can be used multiple times.
 # Default: no custom URLs
-#DatabaseCustomURL http://myserver.com/mysigs.ndb
+#<% @db_custom_url.each { |d| -%>
+DatabaseCustomURL <%= d %>
+<% } %>
 #DatabaseCustomURL file:///mnt/nfs/local.hdb
 
 # This option allows you to easily point freshclam to private mirrors.
@@ -103,12 +105,14 @@ DatabaseMirror db.local.clamav.net
 # and ScriptedUpdates. It can be used multiple times to provide
 # fall-back mirrors.
 # Default: disabled
-#PrivateMirror mirror1.mynetwork.com
+<% @private_mirrors.each { |m| %>
+PrivateMirror <%= m %>
+<% } %>
 #PrivateMirror mirror2.mynetwork.com
 
 # Number of database checks per day.
 # Default: 12 (every two hours)
-#Checks 24
+Checks <%= @check_db_state_freq %>
 
 # Proxy settings
 # Default: disabled
@@ -126,11 +130,13 @@ DatabaseMirror db.local.clamav.net
 # User-Agent header.
 # Default: clamav/version_number
 #HTTPUserAgent SomeUserAgentIdString
+<% if @user_agent != '' %>HTTPUserAgent <%= @user_agent %><% end -%>
 
 # Use aaa.bbb.ccc.ddd as client address for downloading databases. Useful for
 # multi-homed systems.
 # Default: Use OS'es default outgoing IP address.
 #LocalIPAddress aaa.bbb.ccc.ddd
+<% if @local_ip != '' %>LocalIPAddress <%= @local_ip %><% end -%>
 
 # Send the RELOAD command to clamd.
 # Default: no
@@ -155,21 +161,21 @@ DatabaseMirror db.local.clamav.net
 
 # Enable debug messages in libclamav.
 # Default: no
-#Debug yes
+Debug <%= @debug %>
 
 # Timeout in seconds when connecting to database server.
 # Default: 30
-#ConnectTimeout 60
+ConnectTimeout <%= @connect_timeout %>
 
 # Timeout in seconds when reading from database server.
 # Default: 30
-#ReceiveTimeout 60
+ReceiveTimeout <%= @receive_timeout %>
 
 # With this option enabled, freshclam will attempt to load new
 # databases into memory to make sure they are properly handled
 # by libclamav before replacing the old ones.
 # Default: yes
-#TestDatabases yes
+TestDatabases <%= @test_new_db %>
 
 # When enabled freshclam will submit statistics to the ClamAV Project about
 # the latest virus detections in your environment. The ClamAV maintainers
@@ -189,7 +195,7 @@ DatabaseMirror db.local.clamav.net
 # Default: disabled
 #DetectionStatsCountry country-code
 
-# This option enables support for our "Personal Statistics" service. 
+# This option enables support for our "Personal Statistics" service.
 # When this option is enabled, the information on malware detected by
 # your clamd installation is made available to you through our website.
 # To get your HostID, log on http://www.stats.clamav.net and add a new
@@ -221,11 +227,12 @@ DatabaseMirror db.local.clamav.net
 # This option enables downloading of bytecode.cvd, which includes additional
 # detection mechanisms and improvements to the ClamAV engine.
 # Default: enabled
-#Bytecode yes
+Bytecode <%= @bytecode %>
 
 # Download an additional 3rd party signature database distributed through
 # the ClamAV mirrors. Here you can find a list of available databases:
 # http://www.clamav.net/download/cvd/3rdparty
 # This option can be used multiple times.
+<% @extra_db.each { |db| %>ExtraDatabase <%= db %><% } %>
 #ExtraDatabase dbname1
 #ExtraDatabase dbname2
