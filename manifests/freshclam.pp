@@ -207,7 +207,7 @@ class clamav::freshclam (
 ) {
   include clamav::params
 
-  file { '/etc/freshclam.conf':
+  file { '/etc/clamav/freshclam.conf':
     ensure  => present,
     owner   => $clamav::params::user,
     mode    => '0400',
