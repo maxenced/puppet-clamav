@@ -90,6 +90,8 @@ define clamav::scan (
   $scan         = [ ],
   $scanlog      = "/var/log/clamav/scan_${title}",
   $weekday      = undef,
+  $daemon       = false,
+  $multi        = false
 ) {
   if $move != '' { validate_absolute_path($move) }
 
