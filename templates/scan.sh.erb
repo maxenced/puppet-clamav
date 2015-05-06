@@ -4,7 +4,11 @@
 # ClamAV Scan
 # Scan Name: <%= @title %>
 ###############################################################################
+<% if @daemon %>
+BIN=$(which clamdscan)
+<% else %>
 BIN=$(which clamscan)
+<% end %>
 INC="<% @include.each do |inc| %> --include=<%= inc %><% end -%>"
 INC_DIR="<% @include_dir.each do |inc| %> --include-dir=<%= inc %><% end -%>"
 EXC="<% @exclude.each do |exc| %> --exclude=<%= exc %><% end -%>"
@@ -14,8 +18,11 @@ SCAN="<%= @scan.join(' ') %>"
 RECURSIVE="<% if @recursive %>-r<% end -%>"
 QUIET="<% if @quiet %>--quiet<% end -%>"
 LOG="<%= @scanlog %>"
+<% if @multi %>
+MULTI="-m"
+<% end %>
 
-$BIN $INC $INC_DIR $EXC $EXC_DIR $MOVE $QUIET $RECURSIVE -l $LOG $SCAN
+$BIN $INC $INC_DIR $EXC $EXC_DIR $MOVE $QUIET $RECURSIVE $MULTI -l $LOG $SCAN
 AVSTATUS=$?
 
 # Detect the result of our scan

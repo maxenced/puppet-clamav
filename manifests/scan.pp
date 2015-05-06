@@ -57,6 +57,13 @@
 # [*quiet*]
 #   Be quiet (only print error messages).
 #
+# [*multi*]
+#   Use multi threading ? Only useful if in daemon mode
+#
+# [*daemon*]
+#   Use clamdscan instead of clamscan. You need to enable clamd with clamav::daemon.
+#   Default: false
+#
 # [*recursive*]
 # [*scan*]
 # [*scanlog*]
