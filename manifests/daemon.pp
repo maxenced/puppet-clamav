@@ -121,14 +121,14 @@ class clamav::daemon (
   $max_dir_recursion       = 15,
   $follow_dir_symlink      = false,
   $follow_file_symlink     = false,
-  $scan_pe = true,
+  $scan_pe                 = true,
   $max_threads             = $::processorcount,
   $keep_tmp                = false,
-  $log_clean                = false,
+  $log_clean               = false,
   $cross_fs                = false,
   $command                 = '/usr/sbin/clamd',
   $db_dir                  = '/var/lib/clamav',
-  $logfile          = '/var/log/clamav/clamd.log',
+  $logfile                 = '/var/log/clamav/clamd.log',
   $logfile_max_size        = '2M',
   $log_timestamp           = 'yes',
   $verbose                 = 'yes',
@@ -136,9 +136,10 @@ class clamav::daemon (
   $log_facility            = 'LOG_LOCAL6',
   $log_rotate              = 'yes',
   $pidfile                 = '/var/run/clamd.pid',
-  $user                 = 'root',
+  $user                    = 'root',
   $debug                   = 'yes',
   $bytecode                = 'yes',
+  $self_check_interval     = 3600
 ){
   include clamav
 
