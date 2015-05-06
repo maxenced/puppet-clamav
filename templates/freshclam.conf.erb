@@ -7,7 +7,7 @@ DatabaseDirectory <%= @db_dir %>
 
 # Path to the log file (make sure it has proper permissions)
 # Default: disabled
-UpdateLogFile <%= @update_logfile>
+UpdateLogFile <%= @update_logfile %>
 
 # Maximum size of the log file.
 # Value of 0 disables the limit.
@@ -90,9 +90,9 @@ CompressLocalDatabase <%= @compress_local_db %>
 # With this option you can provide custom sources (http:// or file://) for
 # database files. This option can be used multiple times.
 # Default: no custom URLs
-#<% @db_custom_url.each { |d| -%>
+<% @db_custom_url.each do |d| %>
 DatabaseCustomURL <%= d %>
-<% } %>
+<% end %>
 #DatabaseCustomURL file:///mnt/nfs/local.hdb
 
 # This option allows you to easily point freshclam to private mirrors.
@@ -105,9 +105,9 @@ DatabaseCustomURL <%= d %>
 # and ScriptedUpdates. It can be used multiple times to provide
 # fall-back mirrors.
 # Default: disabled
-<% @private_mirrors.each { |m| %>
+<% @private_mirrors.each do |m| %>
 PrivateMirror <%= m %>
-<% } %>
+<% end %>
 #PrivateMirror mirror2.mynetwork.com
 
 # Number of database checks per day.
@@ -120,23 +120,25 @@ Checks <%= @check_db_state_freq %>
 #HTTPProxyPort 1234
 #HTTPProxyUsername myusername
 #HTTPProxyPassword mypass
-<% if @proxy_server != "" then %>HTTPProxyServer <%= @proxy_server %><% end -%>
-<% if @proxy_port != "" then %>HTTPProxyPort <%= @proxy_port %><% end -%>
-<% if @proxy_username != "" then %>HTTPProxyUsername <%= @proxy_username %><% end -%>
-<% if @proxy_password != "" then %>HTTPProxyPassword <%= @proxy_password %><% end -%>
+<% if @proxy_server != "" %>
+HTTPProxyServer <%= @proxy_server %>
+<% end %>
+<% if @proxy_port != "" %>HTTPProxyPort <%= @proxy_port %><% end %>
+<% if @proxy_username != "" %>HTTPProxyUsername <%= @proxy_username %><% end %>
+<% if @proxy_password != "" %>HTTPProxyPassword <%= @proxy_password %><% end %>
 
 # If your servers are behind a firewall/proxy which applies User-Agent
 # filtering you can use this option to force the use of a different
 # User-Agent header.
 # Default: clamav/version_number
 #HTTPUserAgent SomeUserAgentIdString
-<% if @user_agent != '' then %>HTTPUserAgent <%= @user_agent %><% end -%>
+<% if @user_agent != '' %>HTTPUserAgent <%= @user_agent %><% end %>
 
 # Use aaa.bbb.ccc.ddd as client address for downloading databases. Useful for
 # multi-homed systems.
 # Default: Use OS'es default outgoing IP address.
 #LocalIPAddress aaa.bbb.ccc.ddd
-<% if @local_ip != '' then %>LocalIPAddress <%= @local_ip %><% end -%>
+<% if @local_ip != '' %>LocalIPAddress <%= @local_ip %><% end %>
 
 # Send the RELOAD command to clamd.
 # Default: no
@@ -233,6 +235,6 @@ Bytecode <%= @bytecode %>
 # the ClamAV mirrors. Here you can find a list of available databases:
 # http://www.clamav.net/download/cvd/3rdparty
 # This option can be used multiple times.
-<% @extra_db.each { |db| %>ExtraDatabase <%= db %><% } %>
+<% @extra_db.each { |db| %>ExtraDatabase <%= db %><% } %>
 #ExtraDatabase dbname1
 #ExtraDatabase dbname2
