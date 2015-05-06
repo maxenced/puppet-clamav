@@ -223,6 +223,6 @@ class clamav::freshclam (
     command => $command,
     minute  => $minute,
     hour    => $hour,
-    require => File['/etc/freshclam.conf'],
+    require => File['/etc/clamav/freshclam.conf'],
   }
 }
