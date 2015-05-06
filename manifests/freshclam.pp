@@ -214,15 +214,11 @@ class clamav::freshclam (
     content => template('clamav/freshclam.conf.erb'),
   }
 
-  $cron_ensure = $enable ? {
-    true    => 'present',
-    default => 'absent',
+  service { 'clamav-freshclam' :
+    ensure    => running,
+    enable    => true,
+    require   => Class['clamav::package'],
+    subscribe => File['/etc/clamav/freshclam.conf']
   }
-  cron { 'clamav-freshclam':
-    ensure  => $cron_ensure,
-    command => $command,
-    minute  => $minute,
-    hour    => $hour,
-    require => File['/etc/clamav/freshclam.conf'],
-  }
+
 }
