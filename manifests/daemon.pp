@@ -149,7 +149,7 @@ class clamav::daemon (
   file { '/etc/clamav/clamd.conf':
     ensure  => present,
     content => template('clamav/clamd.conf.erb'),
-    requre  => Package[$package_name]
+    require => Package[$package_name]
   }
 
   service { 'clamav-daemon':
