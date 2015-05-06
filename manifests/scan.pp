@@ -67,8 +67,8 @@ define clamav::scan (
   $action_ok    = '',
   $action_virus = '',
   $enable       = true,
-  $hour         = fqdn_rand(23,$::title),
-  $minute       = fqdn_rand(59,$::title),
+  $hour         = fqdn_rand(23,$name),
+  $minute       = fqdn_rand(59,$name),
   $month        = undef,
   $monthday     = undef,
   $copy         = false,
@@ -87,7 +87,7 @@ define clamav::scan (
   if $move != '' { validate_absolute_path($move) }
 
   include clamav
-  $scancmd = "/etc/clamav/scans/${::title}"
+  $scancmd = "/etc/clamav/scans/${name}"
 
   file { $scancmd:
     ensure  => present,
@@ -102,7 +102,7 @@ define clamav::scan (
     true    => 'present',
     default => 'absent',
   }
-  cron { "clamav-scan-${::title}":
+  cron { "clamav-scan-${name}":
     ensure   => $cron_ensure,
     command  => $scancmd,
     hour     => $hour,
