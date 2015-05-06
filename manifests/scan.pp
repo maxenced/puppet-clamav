@@ -68,6 +68,8 @@
 # [*scan*]
 # [*scanlog*]
 # [*weekday*]
+# [*verbose*]
+#   Be verbose ? 
 #
 define clamav::scan (
   $action_error = '',
@@ -91,7 +93,8 @@ define clamav::scan (
   $scanlog      = "/var/log/clamav/scan_${title}",
   $weekday      = undef,
   $daemon       = false,
-  $multi        = false
+  $multi        = false,
+  $verbose      = false
 ) {
   if $move != '' { validate_absolute_path($move) }
 
