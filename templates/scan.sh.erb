@@ -32,12 +32,12 @@ AVSTATUS=$?
 # 2 - An Error Occurred
 case $AVSTATUS in
 1)
-  <%= @action_virus %>
+  <%= @action_virus %> $LOG
   ;;
 2)
-  <%= @action_error %>
+  <%= @action_error %> $LOG
   ;;
 *)
-  <%= @action_ok %>
+  <%= @action_ok %> $LOG
   ;;
 esac
