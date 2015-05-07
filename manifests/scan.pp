@@ -64,12 +64,15 @@
 #   Use clamdscan instead of clamscan. You need to enable clamd with clamav::daemon.
 #   Default: false
 #
+# [*compresslog*]
+#   Compress (gzip) generated log file. Default: false
+#
 # [*recursive*]
 # [*scan*]
 # [*scanlog*]
 # [*weekday*]
 # [*verbose*]
-#   Be verbose ? 
+#   Be verbose ?
 #
 define clamav::scan (
   $action_error = '',
@@ -91,6 +94,7 @@ define clamav::scan (
   $recursive    = false,
   $scan         = [ ],
   $scanlog      = "/var/log/clamav/scan_${title}",
+  $compresslog  = false,
   $weekday      = undef,
   $daemon       = false,
   $multi        = false,

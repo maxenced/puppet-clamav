@@ -26,6 +26,10 @@ MULTI="-m"
 $BIN $INC $INC_DIR $EXC $EXC_DIR $MOVE $QUIET $VERBOSE $RECURSIVE $MULTI -l $LOG $SCAN
 AVSTATUS=$?
 
+<% if @compresslog %>
+gzip -9 $LOG
+<% end %>
+
 # Detect the result of our scan
 # 0 - No Viruses Detected
 # 1 - Viruses Detected
