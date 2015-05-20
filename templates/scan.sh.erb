@@ -36,12 +36,12 @@ gzip -9 $LOG
 # 2 - An Error Occurred
 case $AVSTATUS in
 1)
-  <%= @action_virus %> $LOG
+    <% if @action_virus != '' %><%= @action_virus %> $LOG<% end %>
   ;;
 2)
-  <%= @action_error %> $LOG
+    <% if @action_error != '' %><%= @action_error %> $LOG<% end %>
   ;;
 *)
-  <%= @action_ok %> $LOG
+    <% if @action_ok != %><%= @action_ok %> $LOG<% end %>
   ;;
 esac
