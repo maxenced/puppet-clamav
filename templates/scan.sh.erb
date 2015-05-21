@@ -42,6 +42,6 @@ case $AVSTATUS in
     <% if @action_error != '' %><%= @action_error %> $LOG<% end %>
   ;;
 *)
-    <% if @action_ok != %><%= @action_ok %> $LOG<% end %>
+    <% if @action_ok != '' %><%= @action_ok %> $LOG<% end %>
   ;;
 esac
