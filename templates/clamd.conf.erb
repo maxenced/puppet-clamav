@@ -83,3 +83,11 @@ Bytecode <%= @bytecode %>
 BytecodeSecurity TrustSigned
 BytecodeTimeout 60000
 
+
+# Don't scan files and directories matching regex
+# This directive can be used multiple times
+# Default: scan all
+<% @exclude_path.each do |path| -%>
+ExcludePath <%= path %>
+<% end -%>
+

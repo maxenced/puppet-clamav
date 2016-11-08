@@ -108,6 +108,9 @@
 #  [*package_name*]
 #   Name of package to install to provide clamd. Default: clamav-daemon
 #
+#  [*exclude_path*]
+#   List of path to exclude
+#
 #===  Authors
 #
 # Maxence Dunnewind <tech@typhon.com>
@@ -139,6 +142,7 @@ class clamav::daemon (
   $user                    = 'root',
   $debug                   = 'yes',
   $bytecode                = 'yes',
+  $exclude_path            = [],
   $self_check_interval     = 3600
 ){
   include clamav
