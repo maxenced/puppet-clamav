@@ -9,6 +9,7 @@ BIN=$(which clamdscan)
 <% else %>
 BIN=$(which clamscan)
 <% end %>
+IONICE="$(which ionice) -c3"
 INC="<% @include.each do |inc| %> --include=<%= inc %><% end -%>"
 INC_DIR="<% @include_dir.each do |inc| %> --include-dir=<%= inc %><% end -%>"
 EXC="<% @exclude.each do |exc| %> --exclude=<%= exc %><% end -%>"
@@ -23,7 +24,7 @@ LOG="<%= @scanlog %>"
 MULTI="-m"
 <% end %>
 
-$BIN $INC $INC_DIR $EXC $EXC_DIR $MOVE $QUIET $VERBOSE $RECURSIVE $MULTI -l $LOG $SCAN
+$IONICE $BIN $INC $INC_DIR $EXC $EXC_DIR $MOVE $QUIET $VERBOSE $RECURSIVE $MULTI -l $LOG $SCAN
 AVSTATUS=$?
 
 <% if @compresslog %>
