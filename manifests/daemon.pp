@@ -111,6 +111,10 @@
 #  [*exclude_path*]
 #   List of path to exclude
 #
+#  [*config_template*]
+#   Default config template to use
+#   Default: 'clamav/clamd.conf.erb'
+#
 #===  Authors
 #
 # Maxence Dunnewind <tech@typhon.com>
@@ -143,7 +147,8 @@ class clamav::daemon (
   $debug                   = 'yes',
   $bytecode                = 'yes',
   $exclude_path            = [],
-  $self_check_interval     = 3600
+  $self_check_interval     = 3600,
+  $config_template         = 'clamav/clamd.conf.erb'
 ){
   include clamav
 
@@ -153,7 +158,7 @@ class clamav::daemon (
 
   file { '/etc/clamav/clamd.conf':
     ensure  => present,
-    content => template('clamav/clamd.conf.erb'),
+    content => template($config_template),
     require => Package[$package_name]
   }
 
